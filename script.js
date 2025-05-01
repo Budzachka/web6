@@ -15,7 +15,6 @@ document.addEventListener("DOMContentLoaded", function () {
   let currentLayout = null;
 
   let allLayouts = ["data/data.json", "data/data1.json", "data/data2.json"];
-let currentLayout = null;
 
 function parseJSON(isNewGame = true) {
   if (isNewGame) {
