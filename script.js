@@ -134,4 +134,5 @@ newGameButton.addEventListener("click", function (event) {
   startTimer();
 });
 });
+newGame();
 });
