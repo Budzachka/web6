@@ -126,12 +126,13 @@ function parseJSON(isNewGame = true) {
   }
 
   gridContainer.addEventListener("click", handleCellClick);
-  restartButton.addEventListener("click", function () {
-    resetGame();
-  });
-  newGameButton.addEventListener("click", function () {
-    newGame();
-  });
-
+restartButton.addEventListener("click",function (event) {
+  resetGame();
+  startTimer();
+});
+newGameButton.addEventListener("click", function (event) {
   newGame();
+  startTimer();
+});
+});
 });
