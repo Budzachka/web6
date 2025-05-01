@@ -133,6 +133,5 @@ newGameButton.addEventListener("click", function (event) {
   newGame();
   startTimer();
 });
-});
 newGame();
 });
