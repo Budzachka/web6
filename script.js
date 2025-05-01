@@ -14,25 +14,18 @@ document.addEventListener("DOMContentLoaded", function () {
   let targetMoves = 0;
   let currentLayout = null;
 
-    function parseJSON(isNewGame = true) {
-    if (isNewGame) {
-      let newNumGrids;
-      let previousData = currentLayout;
+  let allLayouts = ["data/data.json", "data/data1.json", "data/data2.json"];
+  let availableLayouts = [...allLayouts]; // копія масиву всіх рівнів
 
-      do {
-        newNumGrids = Math.floor(Math.random() * 3) + 1;
-        switch (newNumGrids) {
-          case 1:
-            dataJSON = "data/data.json";
-            break;
-          case 2:
-            dataJSON = "data/data1.json";
-            break;
-          case 3:
-            dataJSON = "data/data2.json";
-            break;
-        }
-      } while (dataJSON === previousData);
+  function parseJSON(isNewGame = true) {
+    if (isNewGame) {
+      if (availableLayouts.length === 0) {
+        alert("Ви пройшли всі унікальні рівні! Рівні перезапускаються.");
+        availableLayouts = [...allLayouts]; // оновлюємо пул рівнів
+      }
+
+      const index = Math.floor(Math.random() * availableLayouts.length);
+      dataJSON = availableLayouts.splice(index, 1)[0]; // вибираємо та видаляємо
     } else {
       dataJSON = currentLayout;
     }
@@ -45,6 +38,7 @@ document.addEventListener("DOMContentLoaded", function () {
       updateDisplay();
     }, true);
   }
+
   function initializeGrid() {
     gridContainer.innerHTML = "";
     grid.forEach((row, i) => {
@@ -72,7 +66,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function startTimer() {
-      clearInterval(intervalId);
+    clearInterval(intervalId);
     intervalId = setInterval(() => {
       timer++;
       timerDisplay.innerText = `Timer: ${timer}s`;
@@ -125,26 +119,22 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-
-function checkWin() {
-  const allCellsOff = grid.every(row => row.every(cell => cell === 0));
-  if (allCellsOff) {
+  function checkWin() {
+    const allCellsOff = grid.every(row => row.every(cell => cell === 0));
+    if (allCellsOff) {
       clearInterval(intervalId);
       alert("Congratulations! You won!");
       newGame();
-
-
+    }
   }
-}
 
+  gridContainer.addEventListener("click", handleCellClick);
+  restartButton.addEventListener("click", function () {
+    resetGame();
+  });
+  newGameButton.addEventListener("click", function () {
+    newGame();
+  });
 
-gridContainer.addEventListener("click", handleCellClick);
-restartButton.addEventListener("click",function (event) {
-  resetGame();
-  startTimer();
-});
-newGameButton.addEventListener("click", function (event) {
   newGame();
-  startTimer();
-});
 });
