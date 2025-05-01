@@ -14,36 +14,37 @@ document.addEventListener("DOMContentLoaded", function () {
   let targetMoves = 0;
   let currentLayout = null;
 
-  function parseJSON(isNewGame = true) {
+    function parseJSON(isNewGame = true) {
     if (isNewGame) {
-      let numGrids = Math.floor(Math.random() * 3) + 1;
-      switch (numGrids) {
-        case 1:
-          dataJSON = "data/data.json";
-          break;
-        case 2:
-          dataJSON = "data/data1.json";
-          break;
-        case 3:
-          dataJSON = "data/data2.json";
-          break;
-      }
+      let newNumGrids;
+      let previousData = currentLayout;
+
+      do {
+        newNumGrids = Math.floor(Math.random() * 3) + 1;
+        switch (newNumGrids) {
+          case 1:
+            dataJSON = "data/data.json";
+            break;
+          case 2:
+            dataJSON = "data/data1.json";
+            break;
+          case 3:
+            dataJSON = "data/data2.json";
+            break;
+        }
+      } while (dataJSON === previousData);
     } else {
       dataJSON = currentLayout;
     }
 
-
     $ajaxUtils.sendGetRequest(dataJSON, function(res){
-                              grid = res.grid;
-                              targetMoves = res.targetMoves;
-                              currentLayout = dataJSON;      
-                              initializeGrid();
-                              updateDisplay();
-                          }, true);
-
-
+      grid = res.grid;
+      targetMoves = res.targetMoves;
+      currentLayout = dataJSON;
+      initializeGrid();
+      updateDisplay();
+    }, true);
   }
-
   function initializeGrid() {
     gridContainer.innerHTML = "";
     grid.forEach((row, i) => {
