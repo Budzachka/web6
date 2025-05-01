@@ -15,17 +15,16 @@ document.addEventListener("DOMContentLoaded", function () {
   let currentLayout = null;
 
   let allLayouts = ["data/data.json", "data/data1.json", "data/data2.json"];
-  let availableLayouts = [...allLayouts]; // копія масиву всіх рівнів
+  let availableLayouts = [...allLayouts]; 
 
   function parseJSON(isNewGame = true) {
     if (isNewGame) {
       if (availableLayouts.length === 0) {
-        alert("Ви пройшли всі унікальні рівні! Рівні перезапускаються.");
-        availableLayouts = [...allLayouts]; // оновлюємо пул рівнів
+        availableLayouts = [...allLayouts]; 
       }
 
       const index = Math.floor(Math.random() * availableLayouts.length);
-      dataJSON = availableLayouts.splice(index, 1)[0]; // вибираємо та видаляємо
+      dataJSON = availableLayouts.splice(index, 1)[0]; 
     } else {
       dataJSON = currentLayout;
     }
